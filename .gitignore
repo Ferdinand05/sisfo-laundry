@@ -6,7 +6,8 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-
+dist
+plugins
 # OS X Thumbnails
 ._*
 
