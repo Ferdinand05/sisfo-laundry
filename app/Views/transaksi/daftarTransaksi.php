@@ -2,69 +2,72 @@
 
 
 <?= $this->section('header'); ?>
-<h5>Pengelolaan Jenis Paket/Layanan</h5>
-
+<h5>Daftar Transaksi</h5>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
-
-<button type="button" class="btn btn-success mb-3" id="btnTambahPaket">
-    <i class="fa fa-plus"></i> Tambah Paket/Layanan
-</button>
-
 <div class="container-fluid">
-    <table class="table table-bordered table-hover dataTable dtr-inline collapsed" style="width: 100%;" id="tablePaket">
-        <thead>
+    <table class="table table-bordered table-hover dataTable" id="tableTransaksi" style="width: 100%;">
+        <thead class="bg-info">
             <tr>
                 <th>No.</th>
-                <th>Nama</th>
-                <th>Harga</th>
+                <th>Invoice</th>
+                <th style="width: 10%;">Pelanggan</th>
+                <th>Tanggal Order</th>
+                <th>Tanggal Selesai</th>
+                <th>Total Harga</th>
+                <th>Status</th>
                 <th>Aksi</th>
             </tr>
-        </thead>
         <tbody>
 
         </tbody>
+        </thead>
     </table>
 </div>
 
-<div class="viewModal"></div>
+<div class="modalDetailTransaksi"></div>
+
+
+
+
 
 <script>
-    function listDataPaket() {
+    function listDataTransaksi() {
 
-        $('#tablePaket').DataTable({
+        $('#tableTransaksi').DataTable({
             destroy: true,
             "processing": true,
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "/paket/listDataPaket",
+                "url": "/transaksi/listDataTransaksi",
                 "type": "POST",
             },
             "columnDefs": [{
-                "targets": [0, 3],
+                "targets": [0, 4, 5],
                 "orderable": false,
             }, ],
         })
     }
 
-    function hapusPaket(id) {
+    function hapusTransaksi(ts_id, det_id) {
         Swal.fire({
-            title: 'Anda Akan menghapus Item',
-            text: "Apakah anda Yakin Akan Menghapus Item Ini?",
+            title: 'Apakah Kamu Yakin?',
+            text: "Data yang dihapus, tidak dapat dikembalikan!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya Hapus'
+            confirmButtonText: 'Hapus'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
                     type: "post",
-                    url: "/paket/hapusPaket",
+                    url: "/transaksi/hapusTransaksi",
                     data: {
-                        paket_id: id
+                        ts_id: ts_id,
+                        detail_id: det_id
                     },
                     dataType: "json",
                     success: function(response) {
@@ -76,27 +79,31 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            listDataPaket();
+
+                            listDataTransaksi();
                         }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status + '\n' + thrownError);
                     }
                 });
             }
         })
     }
 
-
-    function editPaket(id) {
+    function detailTransaksi(ts_id, det_id) {
         $.ajax({
             type: "post",
-            url: "/paket/editPaket",
+            url: "/transaksi/detailTransaksi",
             data: {
-                id: id
+                ts_id: ts_id,
+                detail_id: det_id
             },
             dataType: "json",
             success: function(response) {
-                if (response.data) {
-                    $('.viewModal').html(response.data);
-                    $('#modalEditPaket').modal('show');
+                if (response.sukses) {
+                    $('.modalDetailTransaksi').html(response.sukses);
+                    $('#modalDetail').modal('show');
                 }
             }
         });
@@ -105,31 +112,15 @@
 
 
     $(document).ready(function() {
-        listDataPaket();
-
-        $('#btnTambahPaket').click(function(e) {
-            e.preventDefault();
-
-            $.ajax({
-                type: "post",
-                url: "/paket/modalTambahPaket",
-                dataType: "json",
-                success: function(response) {
-                    if (response.data) {
-                        $('.viewModal').html(response.data);
-                        $('#modalPaket').modal('show');
-                    }
-                }
-            });
-
-        });
-
+        listDataTransaksi();
     });
 </script>
+
+
 
 
 <?= $this->endSection(); ?>
 
 <?= $this->section('footer'); ?>
-<p>Hanya boleh diakses oleh Admin</p>
+Daftar Transaksi
 <?= $this->endSection(); ?>

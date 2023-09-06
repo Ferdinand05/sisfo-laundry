@@ -50,7 +50,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="<?= base_url() ?>/index3.html" class="brand-link text-center">
+            <a href="<?= base_url('/') ?>" class="brand-link text-center">
                 <i class="fas fa-vest-patches fa-lg p-2 ml-2"></i>
                 <span class="brand-text font-weight-bold">FEAR Laundry</span>
             </a>
@@ -78,24 +78,35 @@
                         <li class="nav-header">Master</li>
                         <li class="nav-item">
                             <a href="<?= base_url('/paket') ?>" class="nav-link">
-                                <i class="nav-icon fas fa-shopping-bag"></i>
+                                <i class="nav-icon fas fa-shopping-bag text-primary"></i>
                                 <p>Jenis Paket/Layanan</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="<?= base_url('pelanggan') ?>" class="nav-link">
-                                <i class="nav-icon  fas fa-address-book"></i>
+                                <i class="nav-icon  fas fa-address-book text-info"></i>
                                 <p>Pelanggan</p>
                             </a>
                         </li>
                         <li class="nav-item user-panel">
                             <a href="<?= base_url('transaksi') ?>" class="nav-link">
-                                <i class="nav-icon fas fa-cash-register"></i>
+                                <i class="nav-icon fas fa-cash-register text-success"></i>
                                 <p>Transaksi</p>
                             </a>
                         </li>
                         <li class="nav-header">Manajemen</li>
-
+                        <li class="nav-item">
+                            <a href="<?= base_url('transaksi/daftarTransaksi') ?>" class="nav-link">
+                                <i class="nav-icon  fas fa-list text-danger"></i>
+                                <p>Daftar Transaksi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= base_url('') ?>" class="nav-link">
+                                <i class="nav-icon  fas fa-file-invoice-dollar text-warning"></i>
+                                <p>Transaksi Selesai</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
