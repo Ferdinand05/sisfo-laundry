@@ -81,10 +81,33 @@
                             })
                             listDataPelanggan();
                         }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status + '\n' + thrownError);
                     }
                 });
             }
         })
+    }
+
+    function editPelanggan(id) {
+        $.ajax({
+            type: "post",
+            url: "/pelanggan/editPelanggan",
+            data: {
+                id: id
+            },
+            dataType: "json",
+            success: function(response) {
+                if (response.data) {
+                    $('.viewModalPelanggan').html(response.data);
+                    $('#modalEditPelanggan').modal('show');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + '\n' + thrownError);
+            }
+        });
     }
 
 

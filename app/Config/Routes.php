@@ -23,6 +23,8 @@ $routes->post('pelanggan/listDataPelanggan', 'Pelanggan::listDataPelanggan');
 $routes->post('/pelanggan/modalTambahPelanggan', 'Pelanggan::modalTambahPelanggan');
 $routes->post('/pelanggan/simpanPelanggan', 'Pelanggan::simpanPelanggan');
 $routes->post('/pelanggan/hapusPelanggan', 'Pelanggan::hapusPelanggan');
+$routes->post('/pelanggan/editPelanggan', 'Pelanggan::editPelanggan');
+$routes->post('/pelanggan/updatePelanggan', 'Pelanggan::updatePelanggan');
 
 
 // routes Transaksi
@@ -34,3 +36,8 @@ $routes->post('transaksi/tambahTransaksi', 'Transaksi::tambahTransaksi');
 $routes->post('/transaksi/listDataTransaksi', 'Transaksi::listDataTransaksi');
 $routes->post('/transaksi/hapusTransaksi', 'Transaksi::hapusTransaksi');
 $routes->post('/transaksi/detailTransaksi', 'Transaksi::detailTransaksi');
+$routes->post('/transaksi/editTransaksi', 'Transaksi::editTransaksi');
+$routes->post('/transaksi/updateTransaksi', 'Transaksi::updateTransaksi');
+$routes->get('/transaksi/transaksiKeluar', 'Transaksi::transaksiKeluar');
+$routes->post('/transaksi/ambilDataInvoice', 'Transaksi::ambilDataInvoice');
+$routes->post('/transaksi/modalCariTransaksi', 'Transaksi::modalCariTransaksi');

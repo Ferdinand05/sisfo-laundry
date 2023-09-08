@@ -7,6 +7,8 @@ use App\Models\ModelDTPelanggan;
 use App\Models\ModelPelanggan;
 use Config\Services;
 
+use function PHPUnit\Framework\returnSelf;
+
 class Pelanggan extends BaseController
 {
     protected $tablePelanggan;
@@ -33,8 +35,8 @@ class Pelanggan extends BaseController
             foreach ($lists as $list) {
                 $no++;
                 $row = [];
-                $btnPilih = '<button type="button" class="btn btn-secondary " onclick="editPelanggan(\'' . $list->plg_id . '\')"><i class="fa fa-edit"></i></button>';
-                $btnHapus = '<button type="button" class="btn btn-danger " onclick="hapusPelanggan(\'' . $list->plg_id . '\')"><i class="fa fa-trash-alt"></i></button>';
+                $btnPilih = '<button type="button" class="btn btn-primary " onclick="editPelanggan(\'' . $list->plg_id . '\')" title="Edit User"><i class="fas fa-user-edit"></i></button>';
+                $btnHapus = '<button type="button" class="btn btn-danger " onclick="hapusPelanggan(\'' . $list->plg_id . '\')" title="Hapus User"><i class="fa fa-trash-alt"></i></button>';
                 $row[] = $no;
                 $row[] = $list->plg_nama;
                 $row[] = $list->plg_hp;
@@ -138,6 +140,96 @@ class Pelanggan extends BaseController
             $json = [
                 'sukses' => 'Data Berhasil Dihapus!'
             ];
+
+            return $this->response->setJSON($json);
+        } else {
+            exit('Tidak Bisa Diakses');
+        }
+    }
+
+
+    public function editPelanggan()
+    {
+        if ($this->request->isAJAX()) {
+
+            $plg_id = $this->request->getPost('id');
+
+            $tablePelanggan = $this->tablePelanggan->find($plg_id);
+
+            $data = [
+                'pelanggan' => $tablePelanggan
+            ];
+
+            $json = [
+                'data' => view('pelanggan/modalEditPelanggan', $data)
+            ];
+
+
+            return $this->response->setJSON($json);
+        } else {
+            exit('Tidak bisa diakses');
+        }
+    }
+
+
+    public function updatePelanggan()
+    {
+        if ($this->request->isAJAX()) {
+
+            $nama = $this->request->getPost('nama');
+            $hp = $this->request->getPost('hp');
+            $alamat = $this->request->getPost('alamat');
+            $id = $this->request->getPost('id');
+
+            $validation = \Config\Services::validation();
+            $rules = [
+                'nama_pelanggan' => [
+                    'label' => 'Nama Pelanggan',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} Tidak Boleh Kosong'
+                    ]
+                ],
+                'hp_pelanggan' => [
+                    'label' => 'No HP/Telepon',
+                    'rules' => 'required|max_length[13]',
+                    'errors' => [
+                        'required' => '{field} Tidak Boleh Kosong',
+                        'max_length' => '{field} Tidak Lebih dari {param} angka!'
+                    ]
+                ],
+                'alamat_pelanggan' => [
+                    'label' => 'Alamat Pelanggan',
+                    'rules' => 'string'
+                ]
+            ];
+
+            $data = [
+                'nama_pelanggan' => $nama,
+                'hp_pelanggan' => $hp,
+                'alamat_pelanggan' => $alamat
+            ];
+
+            $validation->setRules($rules);
+            if (!$validation->run($data)) {
+                $json =  [
+                    'error' => [
+                        'errorNamaPelanggan' => $validation->getError('nama_pelanggan'),
+                        'errorHpPelanggan' => $validation->getError('hp_pelanggan')
+                    ]
+                ];
+            } else {
+
+                $this->tablePelanggan->update($id, [
+                    'plg_nama' => $nama,
+                    'plg_hp' => $hp,
+                    'plg_alamat' => $alamat
+                ]);
+
+                $json = [
+                    'sukses' => 'Data Berhasil Diupdate!'
+                ];
+            }
 
             return $this->response->setJSON($json);
         } else {

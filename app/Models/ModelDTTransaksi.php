@@ -11,7 +11,7 @@ class ModelDTTransaksi extends Model
 {
     protected $table = "transaksi";
     protected $column_order = array(null, 'invoice', 'nama_pelanggan', 'ts_tgl', 'ts_tgl_selesai', 'totalharga', 'ts_status', null);
-    protected $column_search = array('nama_pelanggan', 'ts_tgl');
+    protected $column_search = array('ts_tgl', 'ts_status', 'ts_status_cucian');
     protected $order = array('nama_pelanggan' => 'ASC');
     protected $request;
     protected $db;

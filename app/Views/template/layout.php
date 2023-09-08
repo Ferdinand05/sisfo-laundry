@@ -102,9 +102,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= base_url('') ?>" class="nav-link">
+                            <a href="<?= base_url('/transaksi/transaksiKeluar') ?>" class="nav-link">
                                 <i class="nav-icon  fas fa-file-invoice-dollar text-warning"></i>
-                                <p>Transaksi Selesai</p>
+                                <p>Transaksi Keluar</p>
                             </a>
                         </li>
                     </ul>

@@ -93,7 +93,7 @@ class Paket extends BaseController
             foreach ($lists as $list) {
                 $no++;
                 $row = [];
-                $btnPilih = '<button type="button" class="btn btn-secondary " onclick="editPaket(\'' . $list->paket_id . '\')"><i class="fa fa-edit"></i></button>';
+                $btnPilih = '<button type="button" class="btn btn-primary " onclick="editPaket(\'' . $list->paket_id . '\')"><i class="fa fa-edit"></i></button>';
                 $btnHapus = '<button type="button" class="btn btn-danger " onclick="hapusPaket(\'' . $list->paket_id . '\')"><i class="fa fa-trash-alt"></i></button>';
                 $row[] = $no;
                 $row[] = $list->paket_nama;
