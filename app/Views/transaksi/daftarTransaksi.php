@@ -141,5 +141,22 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('footer'); ?>
-<a href="/transaksi/transaksiKeluar" class="btn btn-danger">Transaksi Keluar</a>
+
+<a href="/transaksi/transaksiKeluar" class="m-2 btn btn-danger">Transaksi Keluar</a>
+
+
+
+<div class="float-right p-2">
+	<button type="button" class=" btn btn-success">
+		Belum Bayar <span class="badge badge-light"><?= $belumbayar; ?></span>
+	</button>
+	<button type="button" class="btn btn-warning">
+		Sudah Bayar <span class="badge badge-light"><?= $sudahbayar; ?></span>
+	</button>
+	<button type="button" class=" btn btn-danger">
+		Diambil <span class="badge badge-light"><?= $diambil; ?></span>
+	</button>
+</div>
+
+
 <?= $this->endSection(); ?>

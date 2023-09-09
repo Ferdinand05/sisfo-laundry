@@ -41,3 +41,9 @@ $routes->post('/transaksi/updateTransaksi', 'Transaksi::updateTransaksi');
 $routes->get('/transaksi/transaksiKeluar', 'Transaksi::transaksiKeluar');
 $routes->post('/transaksi/ambilDataInvoice', 'Transaksi::ambilDataInvoice');
 $routes->post('/transaksi/modalCariTransaksi', 'Transaksi::modalCariTransaksi');
+$routes->post('/transaksi/listCariDataTransaksi', 'Transaksi::listCariDataTransaksi');
+$routes->post('/transaksi/ambilDataTransaksi', 'Transaksi::ambilDataTransaksi');
+
+$routes->post('/transaksi/insertTransaksiKeluar', 'Transaksi::insertTransaksiKeluar');
+$routes->post('/transaksi/listDataTransaksiKeluar', 'Transaksi::listDataTransaksiKeluar');
+$routes->post('/transaksi/hapusTransaksiKeluar', 'Transaksi::hapusTransaksiKeluar');

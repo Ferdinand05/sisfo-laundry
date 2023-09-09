@@ -57,7 +57,7 @@
         <div class="col-md-3">
             <label for="tgl_ambil">Tanggal Pengambilan</label>
             <div class="input-group">
-                <input type="date" class="form-control" name="tgl_ambil" id="tgl_ambil" value="<?= date('Y-m-d'); ?>">
+                <input type="date" class="form-control" name="tgl_ambil" id="tgl_ambil">
             </div>
         </div>
         <div class="col-md-3">
@@ -91,6 +91,7 @@
         $('#totalharga').val('');
         $('#nama_pelanggan').val('');
         $('#nama_pengambil').val('');
+        $('#tgl_ambil').val('');
     }
 
     function ambilDataInvoice() {
@@ -124,6 +125,34 @@
         });
     }
 
+    function insertTransaksiKeluar() {
+        $.ajax({
+            type: "post",
+            url: "/transaksi/insertTransaksiKeluar",
+            data: {
+                invoice: $('#invoice').val(),
+                tgl_order: $('#tgl_order').val(),
+                tgl_selesai: $('#tgl_selesai').val(),
+                berat: $('#berat').val(),
+                totalharga: $('#totalharga').val(),
+                nama: $('#nama_pelanggan').val(),
+                nama_ambil: $('#nama_pengambil').val(),
+                tgl_ambil: $('#tgl_ambil').val()
+            },
+            dataType: "json",
+            success: function(response) {
+                if (response.sukses) {
+                    Swal.fire(
+                        'Good job!',
+                        response.sukses,
+                        'success'
+                    );
+                }
+            }
+        });
+    }
+
+
     $(document).ready(function() {
 
         $('#invoice').keydown(function(e) {
@@ -151,6 +180,28 @@
         });
 
 
+        $('#btnTransaksiKeluar').click(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin ?',
+                text: "Transaksi akan diselesaikan, dan status Pembayaran akan berubah",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Tambahkan!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    insertTransaksiKeluar();
+                    resetTransaksi();
+                    listDataTransaksiKeluar();
+                }
+
+
+            })
+        });
+
+
     });
 </script>
 
@@ -159,5 +210,90 @@
 
 
 <?= $this->section('footer'); ?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <table class="table dataTable table-sm table-hover table-bordered" id="tableTransaksiKeluar" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Invoice</th>
+                        <th>Nama</th>
+                        <th>Tanggal Order</th>
+                        <th>Nama Pengambil</th>
+                        <th>Tanggal Diambil</th>
+                        <th>Total Harga</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function listDataTransaksiKeluar() {
+
+        $('#tableTransaksiKeluar').DataTable({
+            destroy: true,
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "ajax": {
+                "url": "/transaksi/listDataTransaksiKeluar",
+                "type": "POST",
+            },
+            "columnDefs": [{
+                "targets": [0, 1, 7],
+                "orderable": false,
+            }, ],
+        })
+    }
+
+    function hapusTransaksiKeluar(invoice) {
+        Swal.fire({
+            title: 'Apakah kamu yakin?',
+            text: "Data yang dihapus tidak bisa dikembalikan",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "post",
+                    url: "/transaksi/hapusTransaksiKeluar",
+                    data: {
+                        invoice: invoice
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.sukses) {
+                            Swal.fire({
+                                position: 'top',
+                                icon: 'success',
+                                title: response.sukses,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            listDataTransaksiKeluar();
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+
+
+    $(document).ready(function() {
+        listDataTransaksiKeluar();
+    });
+</script>
+
 
 <?= $this->endSection(); ?>

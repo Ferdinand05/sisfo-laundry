@@ -7,11 +7,11 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 use Config\Services;
 
-class ModelDTTransaksi extends Model
+class ModelDTCariTransaksi extends Model
 {
     protected $table = "transaksi";
-    protected $column_order = array(null, 'invoice', 'nama_pelanggan', 'ts_tgl', 'ts_tgl_selesai', 'totalharga', 'ts_status', null);
-    protected $column_search = array('ts_tgl_selesai', 'ts_status', 'ts_status_cucian');
+    protected $column_order = array(null, 'invoice', 'nama_pelanggan', 'ts_tgl_selesai', 'totalharga', 'ts_status', null);
+    protected $column_search = array('ts_tgl', 'ts_status', 'ts_status_cucian');
     protected $order = array('nama_pelanggan' => 'ASC');
     protected $request;
     protected $db;

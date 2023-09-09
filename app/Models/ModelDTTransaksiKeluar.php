@@ -7,12 +7,12 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 use Config\Services;
 
-class ModelDTTransaksi extends Model
+class ModelDTTransaksiKeluar extends Model
 {
-    protected $table = "transaksi";
-    protected $column_order = array(null, 'invoice', 'nama_pelanggan', 'ts_tgl', 'ts_tgl_selesai', 'totalharga', 'ts_status', null);
-    protected $column_search = array('ts_tgl_selesai', 'ts_status', 'ts_status_cucian');
-    protected $order = array('nama_pelanggan' => 'ASC');
+    protected $table = "transaksi_keluar";
+    protected $column_order = array(null, 'invoice', 'nama', 'tgl_order', 'nama_pengambil', 'tgl_ambil', 'totalharga', null);
+    protected $column_search = array('nama', 'tgl_ambil', 'tgl_order');
+    protected $order = array('tgl_ambil' => 'ASC');
     protected $request;
     protected $db;
     protected $dt;
@@ -23,7 +23,7 @@ class ModelDTTransaksi extends Model
         $this->db = db_connect();
         $this->request = $request;
 
-        $this->dt = $this->builder('transaksi')->join('detail_transaksi as det', 'ts_id=det.dettransaksi_id');
+        $this->dt = $this->db->table($this->table);
     }
     private function _get_datatables_query()
     {
@@ -64,7 +64,7 @@ class ModelDTTransaksi extends Model
     }
     public function count_all()
     {
-        $tbl_storage = $this->builder('transaksi')->join('detail_transaksi as det', 'ts_id=det.dettransaksi_id');
+        $tbl_storage = $this->db->table($this->table);
         return $tbl_storage->countAllResults();
     }
 }
