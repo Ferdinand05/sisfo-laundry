@@ -7,12 +7,13 @@
 
 <?= $this->section('content'); ?>
 <div class="container-fluid">
+	<button class="btn btn-primary m-2" id="btnModalFilter"><i class="fas fa-filter"></i> Filter Per Tanggal Order</button>
 	<table class="table table-bordered table-hover dataTable" id="tableTransaksi" style="width: 100%;">
 		<thead class="bg-info">
 			<tr>
 				<th>No.</th>
 				<th>Invoice</th>
-				<th style="width: 10%;">Pelanggan</th>
+				<th style="width: 7%;">Pelanggan</th>
 				<th>Tanggal Order</th>
 				<th>Tanggal Selesai</th>
 				<th>Total Harga</th>
@@ -28,11 +29,27 @@
 
 <div class="modalDetailTransaksi"></div>
 
-
+<div class="ModalfilterLaporan"></div>
 
 
 
 <script>
+	function modalFilterLaporan() {
+		$.ajax({
+			type: "post",
+			url: "/transaksi/modalFilterLaporan",
+			dataType: "json",
+			success: function(response) {
+				if (response.data) {
+					$('.ModalfilterLaporan').html(response.data);
+					$('#modalFilterLaporan').modal('show');
+				}
+			}
+		});
+	}
+
+
+
 	function listDataTransaksi() {
 
 		$('#tableTransaksi').DataTable({
@@ -45,11 +62,14 @@
 				"type": "POST",
 			},
 			"columnDefs": [{
-				"targets": [0, 4, 5],
+				"targets": [0, 1, 7],
 				"orderable": false,
 			}, ],
 		})
 	}
+
+
+
 
 	function hapusTransaksi(ts_id, det_id) {
 		Swal.fire({
@@ -132,6 +152,11 @@
 
 	$(document).ready(function() {
 		listDataTransaksi();
+
+		$('#btnModalFilter').click(function(e) {
+			e.preventDefault();
+			modalFilterLaporan();
+		});
 	});
 </script>
 

@@ -22,11 +22,17 @@ class ModelDTTransaksi extends Model
         parent::__construct();
         $this->db = db_connect();
         $this->request = $request;
-
-        $this->dt = $this->builder('transaksi')->join('detail_transaksi as det', 'ts_id=det.dettransaksi_id');
     }
-    private function _get_datatables_query()
+    private function _get_datatables_query($tglawal, $tglakhir)
     {
+
+        if ($tglawal == '' && $tglakhir == '') {
+            $this->dt = $this->builder('transaksi')->join('detail_transaksi as det', 'ts_id=det.dettransaksi_id');
+        } else {
+            $this->dt = $this->builder('transaksi')->join('detail_transaksi as det', 'ts_id=det.dettransaksi_id')
+                ->where('ts_tgl >=', $tglawal)->where('ts_tgl <=', $tglakhir);
+        }
+
         $i = 0;
         foreach ($this->column_search as $item) {
             if ($this->request->getPost('search')['value']) {
@@ -49,21 +55,29 @@ class ModelDTTransaksi extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables()
+    function get_datatables($tglawal, $tglakhir)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($tglawal, $tglakhir);
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered()
+    function count_filtered($tglawal, $tglakhir)
     {
-        $this->_get_datatables_query();
+        $this->_get_datatables_query($tglawal, $tglakhir);
         return $this->dt->countAllResults();
     }
-    public function count_all()
+    public function count_all($tglawal, $tglakhir)
     {
+
+        if ($tglawal == '' && $tglakhir == '') {
+            $this->dt = $this->builder('transaksi')->join('detail_transaksi as d', 'ts_id=d.dettransaksi_id');
+        } else {
+            $this->dt = $this->builder('transaksi')->join('detail_transaksi as d', 'ts_id=d.dettransaksi_id')
+                ->where('ts_tgl >=', $tglawal)->where('ts_tgl <=', $tglakhir);
+        }
+
         $tbl_storage = $this->builder('transaksi')->join('detail_transaksi as det', 'ts_id=det.dettransaksi_id');
         return $tbl_storage->countAllResults();
     }

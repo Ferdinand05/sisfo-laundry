@@ -155,10 +155,12 @@ class Transaksi extends BaseController
 
     public function listDataTransaksi()
     {
+        $tglawal = $this->request->getPost('tglawal');
+        $tglakhir = $this->request->getPost('tglakhir');
         $request = Services::request();
         $datamodel = new ModelDTTransaksi($request);
         if ($request->getPost()) {
-            $lists = $datamodel->get_datatables();
+            $lists = $datamodel->get_datatables($tglawal, $tglakhir);
             $data = [];
             $no = $request->getPost("start");
             foreach ($lists as $list) {
@@ -193,8 +195,8 @@ class Transaksi extends BaseController
             }
             $output = [
                 "draw" => $request->getPost('draw'),
-                "recordsTotal" => $datamodel->count_all(),
-                "recordsFiltered" => $datamodel->count_filtered(),
+                "recordsTotal" => $datamodel->count_all($tglawal, $tglakhir),
+                "recordsFiltered" => $datamodel->count_filtered($tglawal, $tglakhir),
                 "data" => $data
             ];
             echo json_encode($output);
@@ -534,5 +536,15 @@ class Transaksi extends BaseController
         } else {
             exit('Tidak Boleh Diakses!');
         }
+    }
+
+
+    public function modalFilterLaporan()
+    {
+        $json = [
+            'data' => view('transaksi/modalFilterLaporan')
+        ];
+
+        return $this->response->setJSON($json);
     }
 }

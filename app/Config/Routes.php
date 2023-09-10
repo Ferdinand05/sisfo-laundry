@@ -47,3 +47,7 @@ $routes->post('/transaksi/ambilDataTransaksi', 'Transaksi::ambilDataTransaksi');
 $routes->post('/transaksi/insertTransaksiKeluar', 'Transaksi::insertTransaksiKeluar');
 $routes->post('/transaksi/listDataTransaksiKeluar', 'Transaksi::listDataTransaksiKeluar');
 $routes->post('/transaksi/hapusTransaksiKeluar', 'Transaksi::hapusTransaksiKeluar');
+
+
+// laporan
+$routes->post('/transaksi/modalFilterLaporan', 'Transaksi::modalFilterLaporan');

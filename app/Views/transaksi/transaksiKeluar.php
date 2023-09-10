@@ -182,23 +182,33 @@
 
         $('#btnTransaksiKeluar').click(function(e) {
             e.preventDefault();
-            Swal.fire({
-                title: 'Apakah anda yakin ?',
-                text: "Transaksi akan diselesaikan, dan status Pembayaran akan berubah",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Tambahkan!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    insertTransaksiKeluar();
-                    resetTransaksi();
-                    listDataTransaksiKeluar();
-                }
+
+            if ($('#tgl_ambil').val() == '' || $('#invoice').val() == '') {
+                Swal.fire(
+                    'Ada Data Yang Kosong',
+                    'Tanggal Pengambilan/Invoice Tidak Boleh Kosong!',
+                    'question'
+                );
+            } else {
+
+                Swal.fire({
+                    title: 'Apakah anda yakin ?',
+                    text: "Transaksi akan diselesaikan, dan status Pembayaran akan berubah",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Tambahkan!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        insertTransaksiKeluar();
+                        resetTransaksi();
+                        listDataTransaksiKeluar();
+                    }
 
 
-            })
+                })
+            }
         });
 
 
