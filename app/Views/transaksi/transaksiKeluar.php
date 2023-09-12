@@ -221,6 +221,13 @@
 
 <?= $this->section('footer'); ?>
 <div class="container-fluid">
+
+    <div class="row mb-3">
+        <div class="col-md">
+            <button class="btn btn-primary" id="btnPrintTransaksiKeluar"><i class="fa fa-file-pdf"></i> Laporan PDF</button>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md">
             <table class="table dataTable table-sm table-hover table-bordered" id="tableTransaksiKeluar" style="width: 100%;">
@@ -245,6 +252,12 @@
 </div>
 
 <script>
+    $('#btnPrintTransaksiKeluar').click(function(e) {
+        e.preventDefault();
+        window.open('/transaksi/printPdfTransaksi');
+    });
+
+
     function listDataTransaksiKeluar() {
 
         $('#tableTransaksiKeluar').DataTable({

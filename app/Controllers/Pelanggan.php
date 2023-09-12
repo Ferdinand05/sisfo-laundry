@@ -20,6 +20,21 @@ class Pelanggan extends BaseController
 
     public function index()
     {
+
+        // $faker = \Faker\Factory::create('id_ID');
+        // $pelanggan = [];
+        // for ($i = 0; $i < 100; $i++) {
+        //     $pelanggan[] = [
+        //         'plg_nama' => $faker->name(),
+        //         'plg_hp' => $faker->phoneNumber(),
+        //         'plg_alamat' => $faker->address()
+        //     ];
+        // }
+
+        // $this->tablePelanggan->insertBatch($pelanggan);
+
+
+
         return view('pelanggan/vw_pelanggan');
     }
 

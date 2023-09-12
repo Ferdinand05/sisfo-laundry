@@ -149,5 +149,5 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('footer'); ?>
-3
+<a href="/transaksi/daftarTransaksi" class="btn btn-danger">Daftar Transaksi</a>
 <?= $this->endSection(); ?>

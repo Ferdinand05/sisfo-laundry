@@ -7,14 +7,27 @@
 
 <?= $this->section('content'); ?>
 <div class="container-fluid">
-	<button class="btn btn-primary m-2" id="btnModalFilter"><i class="fas fa-filter"></i> Filter Per Tanggal Order</button>
+	<div class="row mb-3">
+		<div class="col-md-3">
+			<button class="btn btn-primary btn-block" id="btnModalFilter"><i class="fas fa-filter"></i> Filter Per Tanggal Order</button>
+		</div>
+		<div class="col-md-2">
+			<div class="input-group mb-3">
+				<input type="number" class="form-control" value="10" placeholder="Jumlah Print Data" id="jumlah_print">
+				<div class="input-group-append">
+					<button class="btn btn-sm btn-primary" type="button" id="btnPrintData" onclick="printPdf()"> <i class="fas fa-lg fa-file-pdf"></i> Laporan PDF</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<table class="table table-bordered table-hover dataTable" id="tableTransaksi" style="width: 100%;">
 		<thead class="bg-info">
 			<tr>
 				<th>No.</th>
 				<th>Invoice</th>
 				<th style="width: 7%;">Pelanggan</th>
-				<th>Tanggal Order</th>
+				<th style="width: 9%;">Tanggal Order</th>
 				<th>Tanggal Selesai</th>
 				<th>Total Harga</th>
 				<th>Status</th>
@@ -48,7 +61,12 @@
 		});
 	}
 
+	function printPdf() {
+		let jumlah_print = $('#jumlah_print').val();
 
+		window.open('/transaksi/printpdf/' + jumlah_print);
+
+	}
 
 	function listDataTransaksi() {
 
@@ -144,6 +162,9 @@
 					$('.modalDetailTransaksi').html(response.data);
 					$('#modalEditTransaksi').modal('show');
 				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(xhr.status + '\n' + thrownError);
 			}
 		});
 	}
@@ -157,6 +178,11 @@
 			e.preventDefault();
 			modalFilterLaporan();
 		});
+
+
+
+
+
 	});
 </script>
 
@@ -172,14 +198,17 @@
 
 
 <div class="float-right p-2">
-	<button type="button" class=" btn btn-success">
+	<button type="button" class=" btn-sm btn-success">
 		Belum Bayar <span class="badge badge-light"><?= $belumbayar; ?></span>
 	</button>
-	<button type="button" class="btn btn-warning">
+	<button type="button" class="btn-sm btn-warning">
 		Sudah Bayar <span class="badge badge-light"><?= $sudahbayar; ?></span>
 	</button>
-	<button type="button" class=" btn btn-danger">
+	<button type="button" class=" btn-sm btn-danger">
 		Diambil <span class="badge badge-light"><?= $diambil; ?></span>
+	</button>
+	<button type="button" class=" btn-sm btn-primary">
+		Menunggu Diambil <span class="badge badge-light"><?= $menunggu; ?></span>
 	</button>
 </div>
 

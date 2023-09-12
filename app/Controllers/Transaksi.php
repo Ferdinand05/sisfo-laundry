@@ -14,6 +14,7 @@ use App\Models\ModelPelanggan;
 use App\Models\ModelSelesaiTransaksi;
 use App\Models\ModelTransaksiKeluar;
 use Config\Services;
+use Dompdf\Dompdf;
 
 class Transaksi extends BaseController
 {
@@ -141,11 +142,12 @@ class Transaksi extends BaseController
         $sudahbayar = $this->tableTransaksi->where('ts_status', 'Sudah Bayar')->countAllResults();
         $belumbayar = $this->tableTransaksi->where('ts_status', 'Belum Bayar')->countAllResults();
         $diambil = $this->tableTransaksi->where('ts_status_cucian', 'Diambil')->countAllResults();
-
+        $menunggudiambil = $this->tableTransaksi->where('ts_status_cucian', 'Menunggu Diambil')->countAllResults();
         $data = [
             'sudahbayar' => $sudahbayar,
             'belumbayar' => $belumbayar,
-            'diambil' => $diambil
+            'diambil' => $diambil,
+            'menunggu' => $menunggudiambil
         ];
 
 
@@ -546,5 +548,48 @@ class Transaksi extends BaseController
         ];
 
         return $this->response->setJSON($json);
+    }
+
+
+    // print PDF
+    public function printpdf($jumlah_print)
+    {
+
+
+        $dataPrint = $this->tableTransaksi->builder('transaksi')->join('detail_transaksi', 'ts_id=dettransaksi_id')
+            ->limit($jumlah_print)->get()->getResultArray();
+
+        $data = [
+            'data' => $dataPrint
+        ];
+
+        $dompdf = new Dompdf();
+        $html = view('print/daftarTransaksiPdf', $data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4');
+        $dompdf->render();
+        $dompdf->stream('Data_Transaksi.pdf', array(
+            "Attachment" => false
+        ));
+    }
+
+    public function printPdfTransaksi()
+    {
+
+
+        $modelTransaksiKeluar = new ModelTransaksiKeluar();
+        $dataPrint = $modelTransaksiKeluar->findAll();
+        $data = [
+            'data' => $dataPrint
+        ];
+
+        $dompdf = new Dompdf();
+        $html = view('print/daftarTransaksiKeluarPdf', $data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4');
+        $dompdf->render();
+        $dompdf->stream('Data_TransaksiKeluar.pdf', array(
+            "Attachment" => false
+        ));
     }
 }

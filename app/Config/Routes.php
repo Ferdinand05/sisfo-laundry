@@ -51,3 +51,6 @@ $routes->post('/transaksi/hapusTransaksiKeluar', 'Transaksi::hapusTransaksiKelua
 
 // laporan
 $routes->post('/transaksi/modalFilterLaporan', 'Transaksi::modalFilterLaporan');
+// print
+$routes->get('/transaksi/printpdf/(:num)', 'Transaksi::printpdf/$1');
+$routes->get('/transaksi/printPdfTransaksi', 'Transaksi::printPdfTransaksi');
