@@ -6,7 +6,7 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
-<div class="container-fluid">
+<div class="container">
 	<div class="row mb-3">
 		<div class="col-md-3">
 			<button class="btn btn-primary btn-block" id="btnModalFilter"><i class="fas fa-filter"></i> Filter Per Tanggal Order</button>
@@ -47,6 +47,10 @@
 
 
 <script>
+	function printTransaksi(ts_id, detail_id) {
+		window.open('/transaksi/fakturTransaksi/' + detail_id, "Cetak Faktur Barang Keluar", "width=500,height=500");
+	}
+
 	function modalFilterLaporan() {
 		$.ajax({
 			type: "post",

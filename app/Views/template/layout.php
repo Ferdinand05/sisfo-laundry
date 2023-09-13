@@ -1,3 +1,7 @@
+<?php
+helper(['auth']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,6 +39,9 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="<?= base_url('/') ?>" class="nav-link">Home</a>
                 </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="<?= base_url('/logout') ?>" class="nav-link text-danger">Logout</a>
+                </li>
             </ul>
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -70,7 +77,7 @@
                         <img src="<?= base_url() ?>/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block"><?= user()->username ?></a>
                     </div>
                 </div>
 
@@ -82,6 +89,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
+                        <!-- master -->
                         <li class="nav-header">Master</li>
                         <li class="nav-item">
                             <a href="<?= base_url('/paket') ?>" class="nav-link">
@@ -89,29 +97,39 @@
                                 <p>Jenis Paket/Layanan</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item user-panel">
                             <a href="<?= base_url('pelanggan') ?>" class="nav-link">
                                 <i class="nav-icon  fas fa-address-book text-info"></i>
                                 <p>Pelanggan</p>
                             </a>
                         </li>
-                        <li class="nav-item user-panel">
+
+                        <!-- transaksi -->
+                        <li class="nav-header">Manajemen Transaksi</li>
+                        <li class="nav-item ">
                             <a href="<?= base_url('transaksi') ?>" class="nav-link">
                                 <i class="nav-icon fas fa-cash-register text-success"></i>
-                                <p>Transaksi</p>
+                                <p>Transaksi Masuk</p>
                             </a>
                         </li>
-                        <li class="nav-header">Manajemen</li>
                         <li class="nav-item">
                             <a href="<?= base_url('transaksi/daftarTransaksi') ?>" class="nav-link">
                                 <i class="nav-icon  fas fa-list text-danger"></i>
                                 <p>Daftar Transaksi</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item user-panel">
                             <a href="<?= base_url('/transaksi/transaksiKeluar') ?>" class="nav-link">
                                 <i class="nav-icon  fas fa-file-invoice-dollar text-warning"></i>
                                 <p>Transaksi Keluar</p>
+                            </a>
+                        </li>
+                        <!-- user -->
+                        <li class="nav-header">Manajemen Admin User</li>
+                        <li class="nav-item">
+                            <a href="<?= base_url('admin') ?>" class="nav-link">
+                                <i class="nav-icon  fas fa-users text-primary"></i>
+                                <p>Daftar User</p>
                             </a>
                         </li>
                     </ul>

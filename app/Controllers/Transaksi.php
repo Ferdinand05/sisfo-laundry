@@ -171,11 +171,12 @@ class Transaksi extends BaseController
                 $btnDetail = '<button type="button" class="btn btn-info text-center" onclick="detailTransaksi(\'' . $list->ts_id . '\',\'' . $list->detail_id . '\')" title="Detail"><i class="fas fa-info-circle"></i></button>';
                 $btnEdit = '<button type="button" class="btn btn-primary text-center" onclick="editTransaksi(\'' . $list->ts_id . '\',\'' . $list->detail_id . '\')" title="Edit"><i class="fa fa-edit"></i></button>';
                 $btnHapus = '<button type="button" class="btn btn-danger text-center" onclick="hapusTransaksi(\'' . $list->ts_id . '\',\'' . $list->detail_id . '\')" title="Hapus"><i class="fa fa-trash-alt"></i></button>';
-                $btnPrint = '<button type="button" class="btn btn-secondary text-center" onclick="printTransaksi(\'' . $list->ts_id . '\',\'' . $list->detail_id . '\')" title="Print"><i class="fa fa-print"></i></button>';
                 if ($list->ts_status == "Sudah Bayar") {
+                    $btnPrint = '<button type="button" class="btn btn-secondary text-center" onclick="printTransaksi(\'' . $list->ts_id . '\',\'' . $list->detail_id . '\')" title="Print"><i class="fa fa-print"></i></button>';
                     $btnStatus = '<span class="badge badge-warning d-block mb-1">' . $list->ts_status . '</span>';
                 } else {
                     $btnStatus = '<span class="badge badge-success d-block mb-1">' . $list->ts_status . '</span>';
+                    $btnPrint = '';
                 }
 
                 if ($list->ts_status_cucian == "Diambil") {
@@ -591,5 +592,20 @@ class Transaksi extends BaseController
         $dompdf->stream('Data_TransaksiKeluar.pdf', array(
             "Attachment" => false
         ));
+    }
+
+    public function fakturTransaksi($detail_id)
+    {
+
+        $modelDetailTransaksi = new ModelDetailTransaksi();
+        $dataDetail = $modelDetailTransaksi->find($detail_id);
+        $ts_id = $dataDetail['dettransaksi_id'];
+        $dataJoin = $this->tableTransaksi->builder('transaksi t')->join('detail_transaksi as d', 't.ts_id=d.dettransaksi_id')->join('paket as p', 't.ts_paketid=paket_id')
+            ->where('ts_id', $ts_id)->where('detail_id', $detail_id)->get()->getResultArray();
+        $data = [
+            'data' => $dataJoin
+        ];
+
+        return view('print/fakturTransaksi', $data);
     }
 }
