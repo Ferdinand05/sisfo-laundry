@@ -24,6 +24,7 @@ helper(['auth']);
     <!-- DataTables -->
     <link rel="stylesheet" href="<?= base_url() ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -65,8 +66,9 @@ helper(['auth']);
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="<?= base_url('/') ?>" class="brand-link text-center">
-                <i class="fas fa-vest-patches fa-lg p-2 ml-2"></i>
-                <span class="brand-text font-weight-bold">FEAR Laundry</span>
+                <!-- <i class="fas fa-vest-patches fa-lg p-2 ml-2"></i> -->
+                <img src="/img/logo.png" alt="logo" class="p-2 ml-2 img-fluid" width="55px">
+                <span class="brand-text font-weight-bold">FEAR LAUNDRY</span>
             </a>
 
             <!-- Sidebar -->
