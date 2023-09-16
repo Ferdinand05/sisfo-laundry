@@ -28,14 +28,23 @@
                     <td><?= $row->name; ?></td>
                     <td><?= $row->description; ?></td>
                     <td>
-                        <button class="btn btn-primary"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button>
+                        <a href="/admin/edit/<?= $row->id  ?>" class="btn btn-primary" id="btnEditAdmin"><i class="fa fa-edit"></i></a>
+                        <a href="/admin/delete/<?= $row->id  ?>" class="btn btn-info" id="btnDeleteAdmin"><i class="fa fa-trash-alt"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+
+
+
+<script>
+
+
+</script>
+
+
 <?= $this->endSection(); ?>
 
 

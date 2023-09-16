@@ -58,6 +58,7 @@ $routes->get('/transaksi/fakturTransaksi/(:num)', 'Transaksi::fakturTransaksi/$1
 
 // admin user
 $routes->get('admin', 'Admin::index', ['filter' => 'role:admin']);
-
+$routes->get('admin/edit/(:num)', 'Admin::edit/$1', ['filter' => 'role:admin']);
+$routes->get('admin/delete/(:num)', 'Admin::delete/$1', ['filter' => 'role:admin']);
 
 // login

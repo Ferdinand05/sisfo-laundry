@@ -125,13 +125,15 @@ helper(['auth']);
                             </a>
                         </li>
                         <!-- user -->
-                        <li class="nav-header">Manajemen Admin User</li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('admin') ?>" class="nav-link">
-                                <i class="nav-icon  fas fa-users text-primary"></i>
-                                <p>Daftar User</p>
-                            </a>
-                        </li>
+                        <?php if (in_groups('admin')) : ?>
+                            <li class="nav-header">Manajemen Admin User</li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('admin') ?>" class="nav-link">
+                                    <i class="nav-icon  fas fa-users text-primary"></i>
+                                    <p>Daftar User</p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
